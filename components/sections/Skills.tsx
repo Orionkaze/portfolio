@@ -80,7 +80,7 @@ export default function Skills() {
           >
             <div className="p-8 md:p-12 border-l-2 border-gold/30 relative">
               <div className="absolute -top-4 -left-[21px] w-10 h-10 bg-black flex items-center justify-center">
-                <span className="font-display text-4xl text-gold-dim leading-none">"</span>
+                <span className="font-display text-4xl text-gold-dim leading-none">&quot;</span>
               </div>
               <p className="pull-quote mb-6">
                 &quot;The best engineers don&apos;t just write code. They engineer momentum.&quot;
