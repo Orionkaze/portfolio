@@ -83,12 +83,12 @@ export default function Skills() {
                 <span className="font-display text-4xl text-gold-dim leading-none">"</span>
               </div>
               <p className="pull-quote mb-6">
-                The best engineers don't just write code. They engineer momentum.
+                &quot;The best engineers don&apos;t just write code. They engineer momentum.&quot;
               </p>
               <div className="flex items-center gap-4">
                 <div className="w-8 h-px bg-gold-dim" />
                 <span className="font-mono text-[0.65rem] text-muted tracking-widest uppercase">
-                  Akshit's Engineering Philosophy
+                  Akshit&apos;s Engineering Philosophy
                 </span>
               </div>
             </div>

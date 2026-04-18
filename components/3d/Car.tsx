@@ -22,7 +22,7 @@ export default function Car({ scrollProgress }: CarProps) {
   useEffect(() => {
     if (scene) {
       scene.traverse((child) => {
-        if ((child as any).isMesh) {
+        if ('isMesh' in child) {
           child.castShadow = true;
           child.receiveShadow = true;
         }

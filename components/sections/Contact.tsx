@@ -55,12 +55,12 @@ export default function Contact() {
           </div>
 
           <h2 className="font-display text-5xl md:text-8xl lg:text-[9rem] text-white leading-[0.8] tracking-tight mb-8">
-            LET'S <span className="text-gold">BUILD</span><br />
+            LET&apos;S <span className="text-gold">BUILD</span><br />
             TOGETHER
           </h2>
 
           <p className="font-mono text-sm text-text/80 max-w-lg mx-auto leading-relaxed mb-16">
-            Open to full-time roles, freelance contracts, and interesting collabs. Let's make something fast.
+            Open to full-time roles, freelance contracts, and interesting collabs. Let&apos;s make something fast.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 md:gap-8">

@@ -13,12 +13,7 @@ function FloodLight({ position }: { position: [number, number, number] }) {
 
     // Subtle flicker effect — random intensity variation
     const baseIntensity = LIGHTING.floodlight.intensity;
-    let frame: number;
-    const flicker = () => {
-      const noise = 0.8 + Math.random() * 0.4; // 0.8 to 1.2
-      light.intensity = baseIntensity * noise;
-      frame = requestAnimationFrame(flicker);
-    };
+
 
     // Run flicker at reduced frequency (every ~100ms)
     const interval = setInterval(() => {
