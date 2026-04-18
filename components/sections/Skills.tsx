@@ -18,7 +18,7 @@ export default function Skills() {
 
       barsRef.current.forEach((bar, i) => {
         if (!bar) return;
-        const targetWidth = bar.getAttribute("data-width");
+        const targetWidth = bar.getAttribute("data-width") || "0%";
 
         gsap.to(bar, {
           width: targetWidth,
