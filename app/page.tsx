@@ -22,11 +22,11 @@ export default function Home() {
     <AnimatePresence mode="wait">
       <motion.main
         key="home-page"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="relative bg-black min-h-screen"
+        className="relative min-h-screen"
       >
         <Cursor />
         <Nav />
