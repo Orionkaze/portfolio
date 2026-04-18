@@ -116,6 +116,7 @@ export default function Scene({ scrollProgress }: SceneProps) {
               darkness={POST_PROCESSING.vignette.darkness}
               blendFunction={BlendFunction.NORMAL}
             />
+            {/* @ts-ignore */}
             <ChromaticAberration
               offset={
                 new THREE.Vector2(
