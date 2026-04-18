@@ -116,7 +116,7 @@ export default function Scene({ scrollProgress }: SceneProps) {
               darkness={POST_PROCESSING.vignette.darkness}
               blendFunction={BlendFunction.NORMAL}
             />
-            {/* @ts-expect-error */}
+            {/* @ts-expect-error Types mismatch in react-three-postprocessing */}
             <ChromaticAberration
               offset={
                 new THREE.Vector2(
