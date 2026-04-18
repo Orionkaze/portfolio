@@ -1,0 +1,449 @@
+PRODUCT REQUIREMENTS DOCUMENT
+Akshit Shukla — Cinematic F1 Portfolio
+For: Antigravity (Claude Opus 4.6)
+Version 1.0  |  April 2026
+
+1. Project Overview
+Build a cinematic, scroll-driven portfolio website for Akshit Shukla — CTO, Full-Stack Developer, and CS-AI/ML student. The experience should feel like an F1 race broadcast intro: immersive, fast, dramatic, and technically impressive.
+
+Owner
+Akshit Shukla
+Role
+CTO & Full-Stack Developer at Arcavon
+Builder
+Antigravity AI Code Editor (Claude Opus 4.6)
+Framework
+Next.js 14 (App Router) + TypeScript
+3D Engine
+React Three Fiber + Three.js
+Scroll Engine
+GSAP ScrollTrigger
+Deployment
+Vercel
+Domain
+www.arcavon.in or custom
+
+
+2. Creative Concept
+2.1 The Vision
+The portfolio opens like an F1 race: pitch-black screen, then an Oracle Red Bull RB19 sitting on a night circuit — from behind, engine idling. As the user scrolls, the car accelerates forward down the illuminated track. The portfolio content rises over this cinematic background layer. Every section transition is timed to the car's journey.
+2.2 Cinematic References
+F1 (2025 film) — cold open title sequences, dramatic track lighting
+Singapore Grand Prix night race — wet asphalt, floodlights, contrast
+Dune / Oppenheimer — large typography, controlled pacing, silence before impact
+2.3 Design Personality
+Dark. Gold. Precise. Fast.
+Feels like a broadcast — not a portfolio template
+Every animation has intent — nothing decorates, everything communicates
+
+
+3. Technical Stack
+3.1 Core Dependencies
+Run the following to scaffold:
+npx create-next-app@latest akshit-portfolio --typescript --tailwind --app
+cd akshit-portfolio
+npm install three @react-three/fiber @react-three/drei gsap @types/three
+npm install @react-three/postprocessing leva
+3.2 Full Dependency List
+next
+14.x — App Router, RSC, Image optimization
+react / react-dom
+18.x
+three
+0.160+ — 3D engine
+@react-three/fiber
+R3F — React bindings for Three.js
+@react-three/drei
+Helpers: OrbitControls, Environment, useGLTF, etc.
+@react-three/postprocessing
+Bloom, depth of field, chromatic aberration
+gsap
+3.x — ScrollTrigger, timeline animations
+@gsap/react
+React hooks for GSAP
+leva
+Dev GUI for tuning 3D params (remove in prod)
+tailwindcss
+Utility CSS for overlay content
+framer-motion
+Overlay section transitions
+typescript
+Strict mode
+3.3 Asset
+3D Car Model
+oracle_red_bull_f1_car_rb19_2023.glb
+Location
+/public/models/car.glb
+Format
+GLB binary (GLTF v2)
+Size
+~52MB
+Meshes
+7 meshes, baked texture (Full_Body_Baked)
+License
+CC Attribution — credit Redgrund / Sketchfab
+
+
+4. Typography — Google Fonts
+Import in app/layout.tsx via next/font/google or <link> tag in the <head>.
+
+Display / Hero
+Bebas Neue — ultra-condensed slab, all caps, F1-grade aggression
+Body / UI
+DM Mono — monospace precision, engineering feel
+Accent / Italic
+Playfair Display (italic weight) — cinematic pull quotes
+Nav / Labels
+Space Grotesk — clean, modern, legible at small sizes
+
+import { Bebas_Neue, DM_Mono, Playfair_Display, Space_Grotesk } from 'next/font/google'
+
+4.1 Font Usage Rules
+Hero name: Bebas Neue, 10–14vw, line-height 0.88, tracked -0.01em
+Section titles: Bebas Neue, 5–7vw
+Body copy: DM Mono, 0.75rem, letter-spacing 0.05em, line-height 2
+Nav links: Space Grotesk, 0.65rem, uppercase, tracked 0.2em
+Pull quotes: Playfair Display italic, 1.4rem
+ALL CAPS only for Bebas Neue — never force uppercase on other fonts
+
+
+5. Icons — Font Awesome 6
+Use Font Awesome 6 Free via CDN or npm package @fortawesome/react-fontawesome.
+npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/free-brands-svg-icons @fortawesome/react-fontawesome
+5.1 Icon Map
+fa-code
+Skills section header, project tech tags
+fa-terminal
+CTO / developer identity badge in hero
+fa-rocket
+Scroll CTA button
+fa-arrow-up-right-from-square
+Project card external link
+fa-github
+Footer + contact section (brands pack)
+fa-linkedin
+Footer + contact (brands pack)
+fa-envelope
+Contact email link
+fa-globe
+Live site links (www.arcavon.in)
+fa-circle-check
+Skills checklist / certifications
+fa-flag-checkered
+Section divider accent (F1 reference)
+fa-gauge-high
+Performance stat — page load
+fa-layer-group
+Architecture / stack section
+fa-bolt
+Fast / performance callout
+fa-chevron-down
+Scroll indicator in hero
+
+
+6. Animations — 21st.dev Reference
+Source animation patterns from https://21st.dev/home and implement with GSAP + Framer Motion. Below are the animations to use per section.
+6.1 Hero Section Animations
+Name reveal
+Staggered letter-by-letter reveal, Bebas Neue, sliding up from below (translateY 60px → 0, opacity 0 → 1, 0.8s ease, 0.05s stagger per char)
+Tag line
+Typewriter effect using GSAP TextPlugin — types out the role text character by character
+Speed lines
+SVG lines animate from right edge, width 0 → full, opacity 0 → 0.6, staggered 0.1s — like the car just blurred past
+Scroll indicator
+Pulsing chevron-down icon with infinite bounce animation (translateY 0 → 8px, 1s ease-in-out infinite)
+Ticker
+CSS marquee animation — tech stack scrolling left infinitely at 18s linear
+6.2 3D Scene Animations
+Car intro
+Car fades in at z: -80, moves to z: -20 over 2s on page load. Subtle idle sway on Y axis (sin wave, amplitude 0.02, 2s period)
+Scroll drive
+GSAP ScrollTrigger maps scroll 0–100% to car Z position from -20 to +120. Car also tilts forward (rotationX) as speed increases
+Floodlight flicker
+SpotLight intensity lerps from 0.8 to 1.2 with random noise on mount — subtle, realistic
+Camera drift
+Camera X position drifts ±0.5 units sinusoidally as user scrolls — gives the broadcast camera feeling
+Bloom pulse
+Bloom effect strength increases on scroll from 0.3 to 0.8 — track lights glow harder as car accelerates
+6.3 Content Overlay Animations
+Section fade
+Each section fades up: opacity 0 → 1, translateY 40px → 0, 0.9s ease. Triggered by IntersectionObserver at 20% threshold
+Stats counter
+Numbers count up from 0 to target value over 2s using GSAP countTo — triggered on scroll into view
+Skill bars
+Width animates from 0% to target% over 1.4s cubic-bezier(0.25, 1, 0.5, 1) when skills section enters viewport
+Project cards
+Cards stagger in: first card 0ms, second 150ms, third 300ms, fourth 450ms. Slight perspective tilt on hover (rotateX 3deg, rotateY -3deg)
+Nav links
+Underline slides in from left on hover — scaleX 0 → 1, transform-origin left
+CTA button
+Magnetic hover: button follows cursor within 40px radius, snaps back on mouse leave (GSAP quickTo)
+6.4 Page Transitions
+Use Framer Motion's AnimatePresence for route transitions
+Exit: opacity 1 → 0, translateY 0 → -20px, 0.3s ease-in
+Enter: opacity 0 → 1, translateY 20px → 0, 0.5s ease-out
+
+
+7. File & Folder Structure
+akshit-portfolio/
+├── public/
+│   ├── models/
+│   │   └── car.glb                  ← RB19 model
+│   └── fonts/                        ← fallback if needed
+├── app/
+│   ├── layout.tsx                   ← font imports, metadata, global wrapper
+│   ├── page.tsx                     ← root page, assembles all sections
+│   └── globals.css                  ← CSS variables, tailwind base
+├── components/
+│   ├── 3d/
+│   │   ├── Scene.tsx                ← R3F Canvas, camera, lights, postprocessing
+│   │   ├── Car.tsx                  ← GLB loader, scroll-driven position
+│   │   ├── Track.tsx                ← procedural asphalt, kerbs, armco walls
+│   │   ├── TrackLights.tsx          ← floodlight poles + SpotLights
+│   │   └── Environment.tsx          ← night sky, fog, ambient
+│   ├── sections/
+│   │   ├── Hero.tsx                 ← name, tagline, CTA, speed lines
+│   │   ├── Stats.tsx                ← 4 stat boxes
+│   │   ├── Work.tsx                 ← 4 project cards
+│   │   ├── Skills.tsx               ← skill bars + quote block
+│   │   ├── About.tsx                ← bio, experience timeline
+│   │   └── Contact.tsx              ← big CTA + links
+│   ├── ui/
+│   │   ├── Nav.tsx                  ← fixed nav
+│   │   ├── Cursor.tsx               ← custom gold cursor
+│   │   ├── Ticker.tsx               ← tech stack marquee
+│   │   └── Footer.tsx
+│   └── ScrollController.tsx         ← GSAP ScrollTrigger init, scroll progress context
+├── lib/
+│   ├── useScrollProgress.ts         ← hook: maps scroll % to car Z
+│   ├── useAnimateIn.ts              ← hook: IntersectionObserver fade-up
+│   └── constants.ts                 ← colors, breakpoints, track params
+└── types/
+    └── three.d.ts                   ← Three.js type extensions
+
+
+8. Section-by-Section Specification
+8.1 Hero Section
+Full viewport height. 3D Scene is the background (position: fixed). Content overlays on top.
+Top tag
+// Full-Stack Engineer & CTO — Est. 2024
+Name line 1
+AKSHIT
+Name line 2 (gold)
+SHUKLA
+Subtext
+Building systems that move fast, hold under pressure, and look like nothing else on the grid.
+CTA Primary
+View Work → (scrolls to #work)
+CTA Ghost
+Get in Touch → (scrolls to #contact)
+Bottom ticker
+React · Next.js · TypeScript · Node.js · Python · Firebase · AWS · Tailwind · Figma
+8.2 Stats Row
+Stat 1
+2+ Years on Track
+Stat 2
+3+ Projects Shipped
+Stat 3
+500+ Students Reached
+Stat 4
+99% Uptime
+8.3 Work Section (Projects)
+Grid of 4 project cards. Each card has a large dimmed number, project name, description, tech tags, and an arrow link.
+
+#
+Name
+Description
+Stack
+01
+LoyaltyPro
+Dual-interface customer retention web app. Cross-browser, mobile-first, SEO optimized.
+Next.js · Tailwind · HTML5
+02
+Regret Engine
+Dark-humor decision simulator with interactive outcome timelines and dynamic mood graphs.
+HTML5 · CSS3 · JS · GA4
+03
+Frontend UI AI Generator
+Generative AI tool: NL prompts → reusable React components. 15+ components, 25% faster prototyping.
+React · AI/ML · TypeScript
+04
+Arcavon Platform
+Game-tech platform with thousands of monthly visits, ~99% uptime, modular frontend architecture.
+React · Node.js · Git · Firebase
+
+8.4 Skills Section
+React / Next.js
+92%
+JavaScript / TypeScript
+90%
+HTML5 / CSS3 / Tailwind
+95%
+Node.js / Express
+78%
+Python
+75%
+Firebase / REST APIs
+80%
+Git / GitHub
+88%
+Figma / UI Design
+72%
+
+Quote block (right column):
+"The best engineers don't just write code. They engineer momentum." — Akshit's Engineering Philosophy
+8.5 About / Experience Timeline
+2026–Now
+GeeksforGeeks Campus Mantri @ SDGI Global University — leading community of 500+ students, organizing hackathons & coding contests
+2025–Now
+CTO & Full-Stack Dev @ Arcavon (Student Startup) — leading technical vision, deployed production platform, ~99% uptime
+2025
+Google Student Ambassador @ SDGI — organized 5+ workshops, Cloud Study Jams for 500+ students
+2024–Now
+B.Tech (Hons), CS - AI/ML @ SDGI Global University — DSA, ML, DBMS, Web Architecture
+8.6 Contact Section
+Big text
+LET'S BUILD TOGETHER
+Subtext
+Open to full-time roles, freelance contracts, and interesting collabs.
+Email
+akshitshukla.knp@gmail.com
+LinkedIn
+akshit-shukla-529707324
+GitHub
+Orionkaze
+Website
+www.arcavon.in
+
+
+9. 3D Scene Specification
+9.1 Camera
+Type
+PerspectiveCamera, FOV 60
+Initial position
+x: 0, y: 2.5, z: 8 (behind and above the car)
+Look at
+x: 0, y: 1, z: 0 (car center mass)
+Scroll behavior
+z moves from 8 → -5 as user scrolls (camera chases car)
+Drift
+x oscillates ±0.3 sinusoidally over scroll — broadcast camera feel
+9.2 Lighting Setup
+AmbientLight
+intensity: 0.05, color: #0a0a0a — near-total darkness
+HemisphereLight
+sky: #1a1a2e, ground: #0a0a0a, intensity: 0.1
+SpotLight (key)
+position above car, color: #FFD700, intensity: 2, angle: 0.3, penumbra: 0.5, castShadow: true
+SpotLight (rim)
+behind car, color: #4466FF, intensity: 1.5 — blue rim on rear wing
+PointLight (front)
+z: 10 ahead of car, color: #FF8800, intensity: 0.8 — headlamp warmth
+Track floodlights
+8x SpotLights on poles, color: #FFF5E0, intensity: 3, pointing down
+9.3 Track — Procedural Construction
+Road surface
+PlaneGeometry 20 units wide × 200 units long. Material: MeshStandardMaterial, color #1a1a1a, roughness 0.9, metalness 0.1
+Lane markings
+BoxGeometry strips, color #FFFFFF, opacity 0.7, spaced every 8 units
+Kerbs (left)
+BoxGeometry, alternating red #CC0000 and white #FFFFFF segments, 0.5 wide × 0.1 tall
+Kerbs (right)
+Same as left
+Armco barriers
+BoxGeometry, color #C0C0C0, metalness 0.8, roughness 0.3, 0.4 wide × 1 tall
+Floodlight poles
+CylinderGeometry, color #888888, height 12 units, 8 poles each side
+Fog
+FogExp2, color #0a0a0a, density 0.015 — car disappears into darkness ahead
+9.4 Post-Processing
+Bloom
+luminanceThreshold: 0.2, intensity: 0.8 on load → 1.4 at full scroll
+Vignette
+offset: 0.3, darkness: 0.8 — cinematic edge darkening
+ChromaticAberration
+offset: [0.001, 0.001] — subtle lens distortion
+ToneMapping
+ACESFilmicToneMapping — gives filmic color grading
+9.5 Car Scroll Behavior
+Scroll 0%
+Car at z: 0, rotationX: 0 — idling on grid
+Scroll 25%
+Car at z: 30, subtle forward tilt rotationX: -0.02
+Scroll 50%
+Car at z: 60, rotationX: -0.04, camera drift begins
+Scroll 75%
+Car at z: 90, bloom intensity peaks
+Scroll 100%
+Car at z: 120, disappears into fog
+
+
+10. Color System
+--black
+#0A0A0A — page background
+--dark
+#111111 — secondary background
+--panel
+#161616 — card/panel background
+--gold
+#C9A84C — primary accent, all highlights
+--gold-bright
+#F0C040 — hover state gold
+--gold-dim
+#7A6128 — tag borders, muted gold
+--text
+#E8E0CC — primary text
+--muted
+#6B6355 — secondary text, nav links
+--white
+#FFFFFF — contrast text on dark
+
+
+11. Antigravity Prompt (Copy-Paste This)
+Use this as the opening prompt in Antigravity with Claude Opus 4.6:
+
+Build a cinematic F1-themed developer portfolio for Akshit Shukla using Next.js 14 (App Router), TypeScript, React Three Fiber, Three.js, GSAP ScrollTrigger, and Tailwind CSS.
+The 3D car model is at /public/models/car.glb (Oracle Red Bull RB19 2023, GLB format, baked textures).
+Follow the PRD exactly. Build all files in the specified structure. Use Bebas Neue + DM Mono + Playfair Display + Space Grotesk from Google Fonts. Use Font Awesome 6 for icons. The 3D scene has: procedural track (asphalt, kerbs, armco, floodlight poles), night lighting (near-zero ambient, SpotLights, blue rim light, bloom post-processing), and the car drives forward as the user scrolls (GSAP ScrollTrigger maps scroll % to car Z position). All content (hero, stats, work, skills, about, contact) overlays on the fixed 3D background. Colors: black #0A0A0A, gold #C9A84C. Do not use any UI templates or component libraries — build everything custom.
+
+
+12. Build Checklist
+Phase 1 — Setup
+Scaffold Next.js 14 app with TypeScript + Tailwind + App Router
+Install all dependencies from Section 3
+Copy car.glb to /public/models/car.glb
+Configure Google Fonts in app/layout.tsx
+Set up Font Awesome 6 package
+Create CSS variables in globals.css
+Phase 2 — 3D Scene
+Build Scene.tsx with R3F Canvas, camera, fog, post-processing
+Build Track.tsx procedurally (road, kerbs, armco, poles)
+Build TrackLights.tsx (8 floodlight SpotLights per side)
+Build Car.tsx — load GLB, position behind camera, scroll-driven Z
+Implement GSAP ScrollTrigger in ScrollController.tsx
+Test car movement across full scroll range
+Tune bloom, vignette, chromatic aberration
+Phase 3 — Content Overlay
+Build Nav.tsx (fixed, transparent, gold logo)
+Build Cursor.tsx (custom gold dot + trailing ring)
+Build Hero.tsx with animated name reveal, typewriter tagline, CTA
+Build Ticker.tsx (tech stack marquee)
+Build Stats.tsx (4 counters with GSAP countTo)
+Build Work.tsx (4 project cards from PRD data)
+Build Skills.tsx (animated bars + quote block)
+Build About.tsx (experience timeline)
+Build Contact.tsx (big typography CTA + social links)
+Build Footer.tsx
+Phase 4 — Polish
+Add IntersectionObserver fade-up on all sections
+Add Framer Motion page transitions
+Add magnetic hover on CTA button
+Mobile responsive pass (speed lines hidden, grid stacks)
+Performance: lazy load 3D scene, optimize GLB if needed
+Add CC Attribution credit for car model (Redgrund / Sketchfab) in footer
+Test on Chrome, Firefox, Safari
+Deploy to Vercel
+
+
+— End of PRD —
+Built for Akshit Shukla · Antigravity + Claude Opus 4.6 · April 2026

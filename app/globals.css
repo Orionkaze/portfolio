@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --black: #0A0A0A;
+  --dark: #111111;
+  --panel: #161616;
+  --gold: #C9A84C;
+  --gold-bright: #F0C040;
+  --gold-dim: #7A6128;
+  --text: #E8E0CC;
+  --muted: #6B6355;
+  --white: #FFFFFF;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--black);
+    color: var(--text);
+    cursor: none;
+  }
+
+  body {
+    background-color: var(--black);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--gold);
+    color: var(--black);
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--black);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--gold-dim);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+  }
+
+  /* Hide default cursor globally, custom cursor component handles it */
+  a, button, [role="button"] {
+    cursor: none;
+  }
+}
+
+@layer components {
+  /* Hero name typography */
+  .hero-name {
+    font-family: var(--font-bebas);
+    font-size: clamp(4rem, 12vw, 14vw);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  /* Section title typography */
+  .section-title {
+    font-family: var(--font-bebas);
+    font-size: clamp(2.5rem, 6vw, 7vw);
+    line-height: 0.92;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  /* Body copy */
+  .body-text {
+    font-family: var(--font-dm-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    line-height: 2;
+    color: var(--text);
+  }
+
+  /* Nav links */
+  .nav-link {
+    font-family: var(--font-space);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav-link:hover {
+    color: var(--gold);
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Pull quote */
+  .pull-quote {
+    font-family: var(--font-playfair);
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: var(--gold);
+  }
+
+  /* Gold accent border */
+  .gold-border {
+    border: 1px solid var(--gold-dim);
+  }
+
+  /* Panel card */
+  .card-panel {
+    background-color: var(--panel);
+    border: 1px solid rgba(201, 168, 76, 0.1);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .card-panel:hover {
+    border-color: rgba(201, 168, 76, 0.3);
+  }
+
+  /* Animate in utility */
+  .animate-in {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .animate-in.visible {
+    animation: fade-up 0.9s ease forwards;
+  }
+
+  /* Speed line SVG */
+  .speed-line {
+    position: absolute;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to left, var(--gold), transparent);
+    opacity: 0;
+  }
+
+  /* Section spacing */
+  .section-padding {
+    padding: 8rem 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding: 10rem 4rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .section-padding {
+      padding: 12rem 6rem;
+    }
+  }
+}
+
+@layer utilities {
+  .text-gold-gradient {
+    background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
