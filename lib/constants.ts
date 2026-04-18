@@ -47,12 +47,12 @@ export const TRACK = {
 // 3D Scene — Lighting — PRD §9.2
 // ═══════════════════════════════════════════════
 export const LIGHTING = {
-  ambient: { intensity: 0.05, color: "#0a0a0a" },
-  hemisphere: { skyColor: "#1a1a2e", groundColor: "#0a0a0a", intensity: 0.1 },
-  spotKey: { color: "#FFD700", intensity: 2, angle: 0.3, penumbra: 0.5 },
-  spotRim: { color: "#4466FF", intensity: 1.5 },
-  pointFront: { color: "#FF8800", intensity: 0.8 },
-  floodlight: { color: "#FFF5E0", intensity: 3 },
+  ambient: { intensity: 0.5, color: "#0a0a0a" },
+  hemisphere: { skyColor: "#1a1a2e", groundColor: "#0a0a0a", intensity: 1.0 },
+  spotKey: { color: "#FFD700", intensity: 500, angle: 0.3, penumbra: 0.5 },
+  spotRim: { color: "#4466FF", intensity: 400 },
+  pointFront: { color: "#FF8800", intensity: 200 },
+  floodlight: { color: "#FFF5E0", intensity: 800 },
 } as const;
 
 // ═══════════════════════════════════════════════
